@@ -1,4 +1,3 @@
-
 "use client";
 
 import css from "./Notes.client.module.css";
@@ -11,8 +10,9 @@ import SearchBox from "../../../../components/SearchBox/SearchBox";
 import Pagination from "../../../../components/Pagination/Pagination";
 import Modal from "../../../../components/Modal/Modal";
 import NoteForm from "../../../../components/NoteForm/NoteForm";
-import { useParams } from "next/navigation";
+import { redirect, useParams } from "next/navigation";
 import type {NoteTag} from "@/lib/api";
+import { Redirect } from "next";
 
 interface NotesClientProps {
   tag?: NoteTag | "all"; 
@@ -22,10 +22,10 @@ export default function NotesClient({tag}: NotesClientProps) {
   const [onQuery, setOnQuery] = useState("");
   const [searchInputValue, setSearchInputValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [modalOpen, setModalOpen] = useState(false);
+  // const [modalOpen, setModalOpen] = useState(false);
 
-  const closeModal = () => setModalOpen(false);
-  const openModal = () => setModalOpen(true);
+  // const closeModal = () => setModalOpen(false);
+  // const openModal = () => setModalOpen(true);
 
   const { id } = useParams<{ id: string }>();
   const { data, isSuccess, isLoading, isError } = useQuery({
@@ -43,7 +43,7 @@ export default function NotesClient({tag}: NotesClientProps) {
   return (
     <div className={css.app}>
       <header className={css.toolbar}>
-        <button className={css.button} onClick={openModal}>
+        <button className={css.button} onClick={() => redirect("/notes/action/create")}>
           Create note +
         </button>
         <SearchBox
@@ -70,11 +70,11 @@ export default function NotesClient({tag}: NotesClientProps) {
         <NoteList notes={data.notes} />
       )}
 
-      {modalOpen && (
+      {/* {modalOpen && (
         <Modal onClose={closeModal}>
           <NoteForm onClose={closeModal} />
         </Modal>
-      )}
+      )} */}
     </div>
   );
 }

@@ -1,8 +1,31 @@
 import {fetchNotes, NoteTag} from "@/lib/api";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import NotesClient from "./Notes.client";
+import { Metadata } from "next";
+
 interface Props {
     params : Promise<{slug?: string[]}> ;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const filterPage = slug?.join(", ") || "all";
+
+  return {
+    title: `NoteHub - filter: ${filterPage}`,
+    description: `List of notes by categories: ${filterPage}`,
+    openGraph: {
+      title: `Notes by filter: ${filterPage}`,
+      description: `Viewing results for ${filterPage}`,
+      url: `https://your-app-url.com/notes/filter/${slug?.join("/")}`,
+      images: [
+        {
+          url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+          alt: `NoteHub - ${filterPage}`,
+        },
+      ],
+    },
+  };
 }
 
 const PER_PAGE = 12;
