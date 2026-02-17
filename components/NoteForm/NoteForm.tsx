@@ -7,9 +7,6 @@ import { createNote, type CreateNote } from "../../lib/api";
 import { useRouter } from 'next/router';
 import { redirect } from 'next/dist/server/api-utils';
 
-interface NoteFormProps {
-  onClose: () => void;
-}
 
 const initialValues: CreateNote = {
   title: "",
@@ -18,7 +15,7 @@ const initialValues: CreateNote = {
 };
 
 
-export default function NoteForm({ onClose }: NoteFormProps) {
+export default function NoteForm() {
   const queryClient = useQueryClient();
     const router = useRouter();
    const { draft, setDraft, clearDraft } = useNoteDraftStore();
@@ -26,7 +23,6 @@ export default function NoteForm({ onClose }: NoteFormProps) {
     mutationFn: createNote,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["note"] });
-      onClose();
     },
   });
 
@@ -45,7 +41,7 @@ const {mutate}= useMutation({
 })
 
   const handleSubmit = (formData : FormData ) => {
-    const values = Object.fromEntries(formData) as CreateNote;
+    const values = Object.fromEntries(formData) as unknown as CreateNote;
     mutation.mutate(values);
   };
   const  handleCancel = () => {
@@ -89,6 +85,7 @@ const {mutate}= useMutation({
             type="submit"
             className={css.submitButton}
             disabled={mutation.isPending}
+         
           >
             Create note
           </button>
