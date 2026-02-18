@@ -16,6 +16,17 @@ const roboto = Roboto ({
 export const metadata : Metadata = {
   title : "Notes App",
   description : "A simple notes application built with Next.js",
+  openGraph:{
+    title: "Notes App",
+    description: "A simple notes application built with Next.js",
+    url: "https://08-zustand-ten-dusky.vercel.app/",
+    images: [
+      {
+        url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+        alt: "Notes App",
+      },
+    ],
+  },
 }
 
 export default function RootLayout({

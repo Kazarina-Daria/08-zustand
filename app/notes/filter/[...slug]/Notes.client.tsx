@@ -8,9 +8,7 @@ import { fetchNotes } from "../../../../lib/api";
 import NoteList from "../../../../components/NoteList/NoteList";
 import SearchBox from "../../../../components/SearchBox/SearchBox";
 import Pagination from "../../../../components/Pagination/Pagination";
-import Modal from "../../../../components/Modal/Modal";
-import NoteForm from "../../../../components/NoteForm/NoteForm";
-import { redirect, useParams, useRouter } from "next/navigation";
+import {useRouter } from "next/navigation";
 import type {NoteTag} from "@/lib/api";
 
 
@@ -24,12 +22,11 @@ export default function NotesClient({tag}: NotesClientProps) {
   const [currentPage, setCurrentPage] = useState(1);
 
   const router = useRouter();
-  const { id } = useParams<{ id: string }>();
+ 
   const { data, isSuccess, isLoading, isError } = useQuery({
     queryKey: ["notes", currentPage, onQuery, tag],
     queryFn: () => fetchNotes(onQuery, currentPage, 12, tag),
     placeholderData: keepPreviousData,
-    refetchOnMount: false,
   });
   const totalPages = data?.totalPages;
 

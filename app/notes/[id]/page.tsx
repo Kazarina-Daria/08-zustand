@@ -23,7 +23,7 @@ export async function generateMetadata({
       url: `https://08-zustand-ten-dusky.vercel.app/notes/${id}`,
       images: [
 {
-          url: " https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+          url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
           alt: `${noteInfo.title}`,
         },
       ],

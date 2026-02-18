@@ -11,7 +11,7 @@ export const metadata : Metadata = {
       url: `https://08-zustand-ten-dusky.vercel.app/notes/create-note`,
       images: [
 {
-          url: " https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+          url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
           alt: "NoteHub - Create Note",
         },
       ],
