@@ -12,7 +12,7 @@ import Modal from "../../../../components/Modal/Modal";
 import NoteForm from "../../../../components/NoteForm/NoteForm";
 import { redirect, useParams } from "next/navigation";
 import type {NoteTag} from "@/lib/api";
-import { Redirect } from "next";
+import Router from "next/router";
 
 interface NotesClientProps {
   tag?: NoteTag | "all"; 
@@ -22,10 +22,6 @@ export default function NotesClient({tag}: NotesClientProps) {
   const [onQuery, setOnQuery] = useState("");
   const [searchInputValue, setSearchInputValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  // const [modalOpen, setModalOpen] = useState(false);
-
-  // const closeModal = () => setModalOpen(false);
-  // const openModal = () => setModalOpen(true);
 
   const { id } = useParams<{ id: string }>();
   const { data, isSuccess, isLoading, isError } = useQuery({
@@ -43,7 +39,7 @@ export default function NotesClient({tag}: NotesClientProps) {
   return (
     <div className={css.app}>
       <header className={css.toolbar}>
-        <button className={css.button} onClick={() => redirect("/notes/action/create")}>
+        <button className={css.button} onClick={() => Router.push("/notes/action/create")}>
           Create note +
         </button>
         <SearchBox
@@ -69,12 +65,6 @@ export default function NotesClient({tag}: NotesClientProps) {
       {isSuccess && (data?.notes?.length ?? 0) > 0 && (
         <NoteList notes={data.notes} />
       )}
-
-      {/* {modalOpen && (
-        <Modal onClose={closeModal}>
-          <NoteForm onClose={closeModal} />
-        </Modal>
-      )} */}
     </div>
   );
 }
