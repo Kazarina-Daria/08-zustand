@@ -5,7 +5,6 @@ import css from "./NoteForm.module.css";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createNote, type CreateNote } from "../../lib/api";
 import { useRouter } from 'next/navigation';
-import { redirect } from 'next/dist/server/api-utils';
 
 
 const initialValues: CreateNote = {
@@ -23,6 +22,8 @@ export default function NoteForm() {
     mutationFn: createNote,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["note"] });
+      clearDraft();
+      router.push("/notes/filter/all");
     },
   });
 
@@ -32,14 +33,6 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElemen
     [e.target.name]: e.target.value,
   })
 }
-const {mutate}= useMutation({
-  mutationFn : createNote,
-  onSuccess: () => {
-    clearDraft();
-    router.push("/notes/filter/all");
-  }
-})
-
   const handleSubmit = (formData : FormData ) => {
     const values = Object.fromEntries(formData) as unknown as CreateNote;
     mutation.mutate(values);

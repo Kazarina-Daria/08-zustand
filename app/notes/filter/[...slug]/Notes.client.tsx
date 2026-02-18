@@ -10,9 +10,9 @@ import SearchBox from "../../../../components/SearchBox/SearchBox";
 import Pagination from "../../../../components/Pagination/Pagination";
 import Modal from "../../../../components/Modal/Modal";
 import NoteForm from "../../../../components/NoteForm/NoteForm";
-import { redirect, useParams } from "next/navigation";
+import { redirect, useParams, useRouter } from "next/navigation";
 import type {NoteTag} from "@/lib/api";
-import Router from "next/router";
+
 
 interface NotesClientProps {
   tag?: NoteTag | "all"; 
@@ -23,7 +23,7 @@ export default function NotesClient({tag}: NotesClientProps) {
   const [searchInputValue, setSearchInputValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const router = Router;
+  const router = useRouter();
   const { id } = useParams<{ id: string }>();
   const { data, isSuccess, isLoading, isError } = useQuery({
     queryKey: ["notes", currentPage, onQuery, tag],
