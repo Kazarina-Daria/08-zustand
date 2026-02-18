@@ -23,6 +23,7 @@ export default function NotesClient({tag}: NotesClientProps) {
   const [searchInputValue, setSearchInputValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
+  const router = Router;
   const { id } = useParams<{ id: string }>();
   const { data, isSuccess, isLoading, isError } = useQuery({
     queryKey: ["notes", currentPage, onQuery, tag],
@@ -39,7 +40,7 @@ export default function NotesClient({tag}: NotesClientProps) {
   return (
     <div className={css.app}>
       <header className={css.toolbar}>
-        <button className={css.button} onClick={() => Router.push("/notes/action/create")}>
+        <button className={css.button} onClick={() => router.push("/notes/action/create")}>
           Create note +
         </button>
         <SearchBox
